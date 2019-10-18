@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "TransactionMapper">
+    <insert id = "addTransaction" parameterType="Transaction">
+
+        INSERT INTO transaction (creator_id, relative_id, interaction_id, cusip_id, price)
+        VALUES (#{creator_id}, #{relative_id}, #{interaction_id}, #{cusip_id}, #{price})
+    </insert>
+
+</mapper>

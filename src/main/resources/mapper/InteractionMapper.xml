@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "TransactionMapper">
+    <insert id = "addInteraction" parameterType="Interaction">
+
+        INSERT INTO interaction (interaction_id, version, reject_code, reject_reason, transaction_id)
+        VALUES (#{interaction_id}, #{version}, #{reject_code}, #{reject_reason}, #{transaction_id})
+    </insert>
+
+</mapper>

@@ -7,7 +7,6 @@ public class Transaction {
     private Integer creator_id;
     private Integer relative_id;
     private Integer match_id;
-    private Integer product_id;
     private Integer interaction_id;
     private Integer cusip_id;
     private BigDecimal price;
@@ -42,14 +41,6 @@ public class Transaction {
 
     public void setMatch_id(Integer match_id) {
         this.match_id = match_id;
-    }
-
-    public Integer getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(Integer product_id) {
-        this.product_id = product_id;
     }
 
     public Integer getInteraction_id() {
