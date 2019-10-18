@@ -1,8 +1,8 @@
-package com.ssm.tpssystem.dao;
+package com.ssm.tpssystem.domain;
 
 import java.math.BigDecimal;
 
-public class TransactionDao {
+public class Transaction {
     private Integer id;
     private Integer creator_id;
     private Integer relative_id;

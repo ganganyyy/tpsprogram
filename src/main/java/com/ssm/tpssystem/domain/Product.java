@@ -1,6 +1,6 @@
-package com.ssm.tpssystem.dao;
+package com.ssm.tpssystem.domain;
 
-public class ProductDao {
+public class Product {
     private Integer id;
     private String cusip;
 

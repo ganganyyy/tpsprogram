@@ -1,6 +1,6 @@
-package com.ssm.tpssystem.dao;
+package com.ssm.tpssystem.domain;
 
-public class InteractionDao {
+public class Interaction {
     private Integer id;
     private Integer interaction_id;
     private Integer version;

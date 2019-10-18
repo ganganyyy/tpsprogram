@@ -1,6 +1,6 @@
-package com.ssm.tpssystem.dao;
+package com.ssm.tpssystem.domain;
 
-public class UserDao {
+public class User {
     private Integer id;
     private String username;
     private String password;
