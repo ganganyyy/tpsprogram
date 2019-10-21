@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace = "TransactionMapper">
-    <insert id = "addTransaction" parameterType="Transaction" useGeneratedKeys="true" keyProperty="id">
+<mapper namespace = "com.ssm.tpssystem.dao.TransactionMapper">
+    <insert id = "addTransaction" parameterType="com.ssm.tpssystem.domain.Transaction" useGeneratedKeys="true" keyProperty="id">
 
         INSERT INTO transaction (creator_id, relative_id, interaction_id, cusip_id, price)
         VALUES (#{creator_id}, #{relative_id}, #{interaction_id}, #{cusip_id}, #{price})

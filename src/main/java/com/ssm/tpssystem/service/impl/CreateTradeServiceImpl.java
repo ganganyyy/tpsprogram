@@ -7,8 +7,9 @@ import com.ssm.tpssystem.domain.Transaction;
 import com.ssm.tpssystem.service.CreateTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
+//@Transactional
 @Service
 public class CreateTradeServiceImpl implements CreateTradeService {
     @Autowired
