@@ -1,5 +1,7 @@
 package com.ssm.tpssystem.domain;
 
+import java.sql.Timestamp;
+
 public class Interaction {
     private Integer id;
     private Integer interaction_id;
@@ -7,6 +9,9 @@ public class Interaction {
     private String reject_code;
     private String reject_reason;
     private Integer transaction_id;
+    private Timestamp create_time;
+
+
 
     public Integer getId() {
         return id;
@@ -54,5 +59,13 @@ public class Interaction {
 
     public void setTransaction_id(Integer transaction_id) {
         this.transaction_id = transaction_id;
+    }
+
+    public Timestamp getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Timestamp create_time) {
+        this.create_time = create_time;
     }
 }

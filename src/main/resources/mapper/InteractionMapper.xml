@@ -3,8 +3,8 @@
 <mapper namespace = "TransactionMapper">
     <insert id = "addInteraction" parameterType="Interaction">
 
-        INSERT INTO interaction (interaction_id, version, reject_code, reject_reason, transaction_id)
-        VALUES (#{interaction_id}, #{version}, #{reject_code}, #{reject_reason}, #{transaction_id})
+        INSERT INTO interaction (interaction_id, version, reject_code, reject_reason, transaction_id, create_time)
+        VALUES (#{interaction_id}, #{version}, #{reject_code}, #{reject_reason}, #{transaction_id}, now())
     </insert>
 
 </mapper>
