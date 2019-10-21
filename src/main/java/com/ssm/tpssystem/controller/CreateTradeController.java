@@ -1,15 +1,14 @@
 package com.ssm.tpssystem.controller;
 
 import com.ssm.tpssystem.domain.Interaction;
+import com.ssm.tpssystem.domain.Trade;
 import com.ssm.tpssystem.domain.Transaction;
 import com.ssm.tpssystem.service.CreateTradeService;
-import com.ssm.tpssystem.service.impl.CreateTradeServiceImpl;
 import org.apache.ibatis.annotations.Param;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,31 +22,32 @@ public class CreateTradeController {
 
     @Autowired
     private CreateTradeService createTradeService;
-    @RequestMapping("/createTrade")
+
+    @RequestMapping(value = "/allTradesForSales", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
     public void CreateTrade(HttpServletResponse httpServletResponse,
-                                  @Param("transaction") Transaction transaction){
-        transaction.setInteraction_id(1);
-        Integer transaction_id = createTradeService.createTransaction(transaction);
+                                  @RequestBody Trade trade){
+
+        Integer trade_id = createTradeService.createTrade(trade);
         Timestamp timestamp = new Timestamp(new Date().getTime());
-        Interaction interaction1 = new Interaction();
-        Interaction interaction2 = new Interaction();
+        Interaction interaction = new Interaction();
 
-        interaction1.setTransaction_id(transaction_id);
-        interaction2.setTransaction_id(transaction_id);
+        interaction.setVersion(1);
+        interaction.setInteraction_id(1);
+        interaction.setTrade_id(trade_id);
+        interaction.setCreate_time(timestamp);
 
-        interaction1.setInteraction_id(1);
-        interaction2.setInteraction_id(1);
+        createTradeService.createInteraction(interaction);
 
-        interaction1.setVersion(1);
-        interaction2.setVersion(2);
+        timestamp = new Timestamp(new Date().getTime());
+        interaction.setVersion(2);
+        interaction.setCreate_time(timestamp);
+        Integer interaction_id = createTradeService.createInteraction(interaction);
 
-        interaction1.setCreate_time(timestamp);
-        interaction2.setCreate_time(timestamp);
-
-        createTradeService.createInteraction(interaction1);
-        createTradeService.createInteraction(interaction2);
-
-
+        Transaction transaction = new Transaction();
+        transaction.setTrade_id(trade_id);
+        transaction.setInteraction_id(interaction_id);
+        createTradeService.createTransaction(transaction);
     }
 
 

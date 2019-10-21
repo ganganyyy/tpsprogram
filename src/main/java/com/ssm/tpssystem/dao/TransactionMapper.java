@@ -1,8 +1,8 @@
 package com.ssm.tpssystem.dao;
 
+
 import com.ssm.tpssystem.domain.Transaction;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Mapper
