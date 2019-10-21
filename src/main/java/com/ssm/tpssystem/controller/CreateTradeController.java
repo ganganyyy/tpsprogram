@@ -1,9 +1,9 @@
 package com.ssm.tpssystem.controller;
 
-import com.ssm.tpssystem.domain.Interaction;
-import com.ssm.tpssystem.domain.Trade;
-import com.ssm.tpssystem.domain.Transaction;
+import com.ssm.tpssystem.domain.*;
 import com.ssm.tpssystem.service.CreateTradeService;
+import com.ssm.tpssystem.service.ProductService;
+import com.ssm.tpssystem.utils.ResultGenerator;
 import org.apache.ibatis.annotations.Param;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin
 @Controller
@@ -22,6 +23,9 @@ public class CreateTradeController {
 
     @Autowired
     private CreateTradeService createTradeService;
+    @Autowired
+    private ResultGenerator resultGenerator;
+
 
     @RequestMapping(value = "/createTrade", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
@@ -50,6 +54,13 @@ public class CreateTradeController {
         createTradeService.createTransaction(transaction);
     }
 
+    @Autowired
+    private ProductService productService;
+    @RequestMapping(value = "/displayProduct", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public RestResult DisplayProduct(HttpServletResponse httpServletResponse){
+        return resultGenerator.getSuccessResult(productService.findAllProduct());
+    }
 
 
 }
