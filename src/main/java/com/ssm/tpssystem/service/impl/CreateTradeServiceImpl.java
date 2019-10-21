@@ -24,7 +24,6 @@ public class CreateTradeServiceImpl implements CreateTradeService {
 
     @Override
     public Integer createInteraction(Interaction interaction) {
-
         interactionMapper.addInteraction(interaction);
         return interaction.getId();
     }

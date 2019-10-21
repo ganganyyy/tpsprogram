@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface TradeMapper {
-    public boolean addTrade(Trade trade);
+    public void addTrade(Trade trade);
 }

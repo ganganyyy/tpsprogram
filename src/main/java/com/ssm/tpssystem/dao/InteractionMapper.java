@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface InteractionMapper {
-    public boolean addInteraction(Interaction interaction);
+    public void addInteraction(Interaction interaction);
 }

@@ -23,7 +23,7 @@ public class CreateTradeController {
     @Autowired
     private CreateTradeService createTradeService;
 
-    @RequestMapping(value = "/allTradesForSales", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/createTrade", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public void CreateTrade(HttpServletResponse httpServletResponse,
                                   @RequestBody Trade trade){
