@@ -10,4 +10,8 @@
         update transaction set interaction_id=#{interaction_id} where trade_id=#{trade_id}
     </update>
 
+    <insert id="insertOneTransaction" parameterType="Transaction" useGeneratedKeys="true" keyProperty="id">
+    insert into transaction
+    values(#{trade_id},#{interaction_id})
+    </insert>
 </mapper>

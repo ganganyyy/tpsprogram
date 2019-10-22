@@ -17,4 +17,6 @@ public interface TransactionMapper {
 
     Integer modify(Transaction transaction);
 
+    int insertOneTransaction(Transaction transaction);
+
 }

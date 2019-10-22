@@ -1,3 +1,4 @@
+/*
 package com.ssm.tpssystem.domain;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +23,7 @@ public class SecurityUserDetils extends User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //TODO:Access Control
-        return AuthorityUtils.commaSeparatedStringToAuthorityList("");
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(this.getDuty());
     }
 
     @Override
@@ -45,3 +46,4 @@ public class SecurityUserDetils extends User implements UserDetails {
         return true;
     }
 }
+*/

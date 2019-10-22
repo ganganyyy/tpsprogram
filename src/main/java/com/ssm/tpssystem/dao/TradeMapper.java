@@ -1,5 +1,6 @@
 package com.ssm.tpssystem.dao;
 
+import com.ssm.tpssystem.domain.Trade;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -20,4 +21,9 @@ public interface TradeMapper {
 
     int updateForPrice(@Param("id") Integer tradeId,@Param("price") Double price);
 
+    Trade selectOneById(@Param("id")Integer tradeId);
+
+    int insertOneTrade(Trade trade);
+
+    int updateMatchId(@Param("id")Integer tradeId,@Param("matchId")Integer matchId);
 }

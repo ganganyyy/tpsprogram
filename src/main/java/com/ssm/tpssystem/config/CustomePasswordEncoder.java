@@ -1,3 +1,4 @@
+/*
 package com.ssm.tpssystem.config;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,3 +14,4 @@ public class CustomePasswordEncoder implements PasswordEncoder {
         return s.equals(charSequence.toString());
     }
 }
+*/

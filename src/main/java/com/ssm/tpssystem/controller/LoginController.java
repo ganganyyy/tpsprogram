@@ -11,27 +11,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;*/
 
+import com.ssm.tpssystem.dao.UserMapper;
 import com.ssm.tpssystem.domain.RestResult;
+import com.ssm.tpssystem.domain.User;
+import com.ssm.tpssystem.service.UserService;
 import com.ssm.tpssystem.utils.ResultGenerator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
-
+import java.util.HashMap;
 
 
 @Controller
 public class LoginController {
     @Autowired
     private ResultGenerator resultGenerator;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public RestResult login() {
+    public RestResult login(@RequestBody HashMap<String,String>data,HttpSession session) {
         System.out.println("enter");
-       return null;
-
+        String username=data.get("username");
+        String password=data.get("password");
+        User user=userService.findUser(username,password);
+        if(user==null){
+            return resultGenerator.getFailResult("wrong username or password");
+        }else{
+            session.setAttribute("Id",user.getId());
+            data.put("duty",user.getDuty());
+            return resultGenerator.getSuccessResult("login successful",data);
+        }
     }
 }
 
