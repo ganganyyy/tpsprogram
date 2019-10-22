@@ -6,5 +6,8 @@
         INSERT INTO interaction (interaction_id, version, reject_code, reject_reason, trade_id, create_time)
         VALUES (#{interaction_id}, #{version}, #{reject_code}, #{reject_reason}, #{trade_id}, now())
     </insert>
-
+    <select id="findInteractionByTrade" parameterType="com.ssm.tpssystem.domain.Trade" resultMap="com.ssm.tpssystem.domain.Interaction">
+        SELECT * FROM interaction
+        WHERE trade_id = #{id}
+    </select>
 </mapper>
