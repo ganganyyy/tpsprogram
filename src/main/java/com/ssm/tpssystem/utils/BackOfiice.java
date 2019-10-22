@@ -8,7 +8,6 @@ public class BackOfiice {
     private Interaction interaction;
     private Trade trade;
     private Transaction transaction;
-
-    public
+    
 
 }

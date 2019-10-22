@@ -9,6 +9,7 @@ public class Trade {
     private Integer match_id;
     private Integer product_id;
     private BigDecimal price;
+    private Integer origin_id;
 
     public Integer getId() {
         return id;
@@ -56,5 +57,13 @@ public class Trade {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getOrigin_id() {
+        return origin_id;
+    }
+
+    public void setOrigin_id(Integer origin_id) {
+        this.origin_id = origin_id;
     }
 }

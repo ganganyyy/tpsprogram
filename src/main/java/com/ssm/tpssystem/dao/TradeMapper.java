@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TradeMapper {
     public void addTrade(Trade trade);
+    public Trade findTradeById(Integer id);
 }

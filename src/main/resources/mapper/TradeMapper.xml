@@ -6,5 +6,8 @@
         INSERT INTO trade (creator_id, relative_id, product_id, price)
         VALUES (#{creator_id}, #{relative_id}, #{product_id}, #{price})
     </insert>
-
+    <select id="findTradeById" parameterType="Integer" resultType="com.ssm.tpssystem.domain.Trade">
+        SELECT * FROM trade
+        WHERE id = #{id}
+    </select>
 </mapper>
