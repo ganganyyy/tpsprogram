@@ -29,7 +29,7 @@ public class TraderController {
         //TODO:CREATOR_ID
         Map<String,Object>data=new HashMap<>();
         data.put("tradeList",tradeService.getAllTrades(1));
-        return resultGenerator.getSuccessResult(tradeService.getAllTradesByCreatorId(1));
+        return resultGenerator.getSuccessResult(data);
     }
 
     //@RequestMapping(value = "/allTradesForSales", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")

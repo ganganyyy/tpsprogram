@@ -16,7 +16,7 @@ public class Transaction {
         return Interaction_id;
     }
 
-    public void setInteraction_id(Integer transaction_id) {
-        this.Interaction_id = Interaction_id;;
+    public void setInteraction_id(Integer Interaction_id) {
+        this.Interaction_id = Interaction_id;
     }
 }

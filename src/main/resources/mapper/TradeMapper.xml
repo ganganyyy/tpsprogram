@@ -19,7 +19,8 @@
         where u.duty='s';
     </select>
 
-    <select id="selectAll"  resultType="Map">
+    <select id="selectAll"  resultType="Map" >
+
         select t.id as tradeId,u.id as creatorId ,u.username as creatorname,u.duty as creatorDuty,t.match_id as matchId,
         t.product_id as productId,t.price,i.version,t.relative_id as relativeId,u2.username as relativename,u2.duty as relativeDuty
         from trade t left join transaction r on t.id=r.trade_id left join interaction i on r.interaction_id =i.id
