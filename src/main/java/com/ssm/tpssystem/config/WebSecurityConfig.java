@@ -46,9 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //close Cross-Site Request Forgery
                 .csrf().disable()
         //front and rear end separation:JWT no need for session
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-               /* .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(),7));*/
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+               .and()
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(),7));
 
     }
     @Override

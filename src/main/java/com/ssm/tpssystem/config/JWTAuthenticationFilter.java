@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/*
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     private Integer tokenExpireTime;
@@ -26,8 +25,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     }
 
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)throws IOException, ServletException {
-        //String header=request.getHeader(SecurityConstant.HEADER);
+        String header=request.getHeader(SecurityConstant.HEADER);
         //if(StrUtil)
     }
 }
-*/
+

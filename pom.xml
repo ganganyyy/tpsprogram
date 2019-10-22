@@ -27,6 +27,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+            <version>1.0.9.RELEASE</version>
+        </dependency>
+
+
 
 
 
@@ -41,12 +48,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-        <!--    <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
