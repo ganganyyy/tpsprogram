@@ -9,6 +9,6 @@ import java.util.List;
 
 @Service
 public interface ImportService {
-    public List getListByExcel(InputStream inputStream,String filename) throws IOException;
-    public Workbook getWorkbook(InputStream inputStream,String filename);
+    public List getListByExcel(InputStream inputStream,String filename) throws Exception;
+    public Workbook getWorkbook(InputStream inputStream,String filename) throws Exception;
 }
