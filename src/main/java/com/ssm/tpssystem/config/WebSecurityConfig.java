@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 @Configuration
-@EnableGlobalMethodSecurity
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailServiceImpl userDetailsService;
@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
         //front and rear end separation:JWT no need for session
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+               .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(),7));
 
     }

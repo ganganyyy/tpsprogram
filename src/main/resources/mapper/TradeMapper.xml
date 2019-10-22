@@ -19,12 +19,14 @@
         where u.duty='s';
     </select>
 
-    <select id="selectAll"  resultType="Map">
+    <select id="selectAll"  resultType="Map" >
+
         select t.id as tradeId,u.id as creatorId ,u.username as creatorname,u.duty as creatorDuty,t.match_id as matchId,
         t.product_id as productId,t.price,i.version,t.relative_id as relativeId,u2.username as relativename,u2.duty as relativeDuty
         from trade t left join transaction r on t.id=r.trade_id left join interaction i on r.interaction_id =i.id
         left join User u on t.creator_id=u.id left join User u2 on t.relative_id=u2.id
-        where t.creator_id=#{creatorId} or u.duty='s';
+        where (t.creator_id=1 or u.duty='s') and t.id NOT IN (
+        select origin_id from trade where origin_id is not null);
     </select>
     <update id="updateForPrice">
         update trade set price=#{price} where id=#{id}
