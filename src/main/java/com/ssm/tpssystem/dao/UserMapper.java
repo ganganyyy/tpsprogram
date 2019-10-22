@@ -1,0 +1,12 @@
+package com.ssm.tpssystem.dao;
+
+import com.ssm.tpssystem.domain.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Mapper
+@Repository
+public interface UserMapper {
+    User selectByUsername(@Param("username") String username);
+}

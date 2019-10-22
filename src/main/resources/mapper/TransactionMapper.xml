@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tpssystem.dao.TransactionMapper" >
+
+    <select id="selectLatestId"  resultType="Integer">
+        select interaction_id from transaction where trade_id=#{tradeId}
+    </select>
+
+    <update id="modify" parameterType="Interaction">
+        update transaction set interaction_id=#{interaction_id} where trade_id=#{trade_id}
+    </update>
+
+</mapper>

@@ -20,17 +20,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 
-@CrossOrigin
+
 @Controller
-@RequestMapping("/client")
 public class LoginController {
     @Autowired
     private ResultGenerator resultGenerator;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public RestResult login(HttpSession session) {
-        return resultGenerator.getFailResult("登录失败");
+    public RestResult login() {
+        System.out.println("enter");
+       return null;
 
     }
 }
