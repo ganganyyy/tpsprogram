@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public class BackOfiice {
 
-    private static double FLOAT_RATE = 0.15
+    private static double FLOAT_RATE = 0.15;
     public RejectResult BOExcecute(Trade trade,Trade changed){
         RejectResult rejectResult = new RejectResult();
         double tradePrice = trade.getPrice().doubleValue();
