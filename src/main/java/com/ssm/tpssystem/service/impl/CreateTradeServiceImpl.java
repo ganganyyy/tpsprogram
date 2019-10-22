@@ -22,6 +22,8 @@ public class CreateTradeServiceImpl implements CreateTradeService {
     @Autowired
     private TradeMapper tradeMapper;
 
+
+
     @Override
     public Integer createInteraction(Interaction interaction) {
         interactionMapper.addInteraction(interaction);

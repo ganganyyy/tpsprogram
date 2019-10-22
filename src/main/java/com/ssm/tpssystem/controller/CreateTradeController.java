@@ -3,6 +3,7 @@ package com.ssm.tpssystem.controller;
 import com.ssm.tpssystem.domain.*;
 import com.ssm.tpssystem.service.CreateTradeService;
 import com.ssm.tpssystem.service.ProductService;
+import com.ssm.tpssystem.service.UserService;
 import com.ssm.tpssystem.utils.ResultGenerator;
 import org.apache.ibatis.annotations.Param;
 
@@ -62,5 +63,12 @@ public class CreateTradeController {
         return resultGenerator.getSuccessResult(productService.findAllProduct());
     }
 
+    @Autowired
+    private UserService userService;
+    @RequestMapping(value = "/displaySales", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public RestResult DisplaySales(HttpServletResponse httpServletResponse){
+        return resultGenerator.getSuccessResult(userService.findAllSales());
+    }
 
 }
