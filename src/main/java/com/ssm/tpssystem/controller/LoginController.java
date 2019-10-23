@@ -50,6 +50,12 @@ public class LoginController {
             return resultGenerator.getSuccessResult("login successful",returnData);
         }
     }
+
+
+    public RestResult exit(HttpSession session){
+        session.removeAttribute("Id");
+        return resultGenerator.getSuccessResult("exit");
+    }
 }
 
 
