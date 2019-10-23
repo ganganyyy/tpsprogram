@@ -28,15 +28,16 @@ public class TraderController {
 
     @RequestMapping(value = "/allTrades", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public RestResult getAllTrades(HttpSession session) {
+    public RestResult getAllTrades(@RequestBody HashMap<String,String>retunData ,HttpSession session) {
        /* String username= (String) session.getAttribute("username");
         System.out.println("enter: "+username);*/
         //Integer creatorId=userService.findByUserName(username).getId();
         Integer creatorId= (Integer) session.getAttribute("Id");
-        System.out.println("id: "+creatorId);
+        Integer userId=Integer.valueOf(retunData.get("userId"));
+        System.out.println("id: "+userId);
         //TODO:CREATOR_ID
         Map<String,Object>data=new HashMap<>();
-        List<Map<String,String>> tradeList=tradeService.getAllTrades(1);
+        List<Map<String,String>> tradeList=tradeService.getAllTrades(userId);
         for(Map trade:tradeList){
             String status= Transform.versionToStatus((Integer)trade.get("version"),(Integer)trade.get("reject_code"));
             trade.put("status",status);

@@ -51,6 +51,7 @@ public class TradeServiceImpl implements TradeService {
         int newTra=tradeMapper.insertOneTrade(curTrade);
         Integer curId=curTrade.getId();
 
+
         Trade preSale=tradeMapper.selectOneById(preTrade.getMatch_id());
         Trade curSale=new Trade(null,preSale.getCreator_id(),preSale.getRelative_id(),curId,
                 preSale.getProduct_id(),price,preSale.getId());
