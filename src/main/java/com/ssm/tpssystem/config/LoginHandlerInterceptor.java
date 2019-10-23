@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class LoginHandlerInterceptor implements HandlerInterceptor {
-    @Override
+  /*  @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Integer Id = (Integer) request.getSession().getAttribute("Id");
         System.out.println("enter interceptor");
@@ -16,7 +16,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
             return false;
         } else {
             return true;
-        }
+        }*//*
     }
 
     @Override
@@ -27,5 +27,5 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
-    }
+    }*/
 }

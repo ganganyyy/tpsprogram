@@ -36,7 +36,7 @@ public class TraderController {
         System.out.println("id: "+creatorId);
         //TODO:CREATOR_ID
         Map<String,Object>data=new HashMap<>();
-        data.put("tradeList",tradeService.getAllTrades(creatorId));
+        data.put("tradeList",tradeService.getAllTrades(1));
         return resultGenerator.getSuccessResult(data);
     }
 
