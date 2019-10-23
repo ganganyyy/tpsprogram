@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Map;
 
 
 @Controller
@@ -42,8 +43,11 @@ public class LoginController {
             return resultGenerator.getFailResult("wrong username or password");
         }else{
             session.setAttribute("Id",user.getId());
-            data.put("duty",user.getDuty());
-            return resultGenerator.getSuccessResult("login successful",data);
+            System.out.println("ID:"+session.getAttribute("Id"));
+            Map<String,String> returnData=new HashMap<>();
+            returnData.put("Id",user.getId().toString());
+            returnData.put("duty",user.getDuty());
+            return resultGenerator.getSuccessResult("login successful",returnData);
         }
     }
 }
