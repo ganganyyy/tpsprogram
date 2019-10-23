@@ -6,6 +6,7 @@ import com.ssm.tpssystem.domain.Trade;
 import com.ssm.tpssystem.service.MatchService;
 import com.ssm.tpssystem.utils.BackOfiice;
 import com.ssm.tpssystem.utils.RejectResult;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -138,8 +139,20 @@ public class MatchServiceImpl implements MatchService {
     //correct price of salesTrade equal to traderTrade
     @Override
     public Integer manualMatch(Integer tradeId,Integer matchTradeId) {
-        Trade traderTrade = tradeMapper.queryById(tradeId);
-        Trade originSalesTrade = tradeMapper.queryById(matchTradeId);
+
+        Trade tempTrade = tradeMapper.queryById(tradeId);
+        String tempDuty = userMapper.queryDutyById(tempTrade.getCreator_id());
+        Trade traderTrade = new Trade();
+        Trade originSalesTrade = new Trade();
+        if(tempDuty.equals("T")||tempDuty.equals("t")){
+            traderTrade = tradeMapper.queryById(tradeId);
+            originSalesTrade = tradeMapper.queryById(matchTradeId);
+        }
+        else {
+            traderTrade = tradeMapper.queryById(matchTradeId);
+            originSalesTrade = tradeMapper.queryById(tradeId);
+        }
+
         Integer originSalesInteractionId = transactionMapper.queryInteraction(traderTrade.getId());
         Interaction originSalesInteraction = interactionMapper.queryById(originSalesInteractionId);
 
