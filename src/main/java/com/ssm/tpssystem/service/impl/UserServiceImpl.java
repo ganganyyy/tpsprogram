@@ -14,13 +14,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUserName(String username) {
 
-       // return userMapper.selectByUsername(username);
+        return userMapper.selectByUsername(username);
         //TODO:can't get connection
-        User user=new User();
+        /*User user=new User();
         user.setId(1);
         user.setUsername("gangan1");
         user.setPassword("123");
         user.setDuty("t");
-        return user;
+        return user;*/
     }
 }
