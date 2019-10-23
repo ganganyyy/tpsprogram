@@ -14,4 +14,11 @@
     insert into transaction
     values(#{trade_id},#{interaction_id})
     </insert>
+
+    <insert id = "addTransaction" parameterType="com.ssm.tpssystem.domain.Transaction">
+
+        INSERT INTO transaction (trade_id, interaction_id)
+        VALUES (#{trade_id}, #{interaction_id})
+    </insert>
+
 </mapper>

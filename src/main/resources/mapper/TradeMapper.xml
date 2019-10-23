@@ -42,4 +42,14 @@
     <update id="updateMatchId">
         update trade set match_id=#{matchId} where id=#{id}
     </update>
+
+    <insert id = "addTrade" parameterType="com.ssm.tpssystem.domain.Trade" useGeneratedKeys="true" keyProperty="id">
+
+        INSERT INTO trade (creator_id, relative_id, product_id, price)
+        VALUES (#{creator_id}, #{relative_id}, #{product_id}, #{price})
+    </insert>
+    <select id="findTradeById" parameterType="Integer" resultType="com.ssm.tpssystem.domain.Trade">
+        SELECT * FROM trade
+        WHERE id = #{id}
+    </select>
 </mapper>

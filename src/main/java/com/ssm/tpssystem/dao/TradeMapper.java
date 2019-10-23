@@ -4,6 +4,7 @@ import com.ssm.tpssystem.domain.Trade;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import com.ssm.tpssystem.domain.Interaction;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +27,7 @@ public interface TradeMapper {
     int insertOneTrade(Trade trade);
 
     int updateMatchId(@Param("id")Integer tradeId,@Param("matchId")Integer matchId);
+
+    public void addTrade(Trade trade);
+    public Trade findTradeById(Integer id);
 }

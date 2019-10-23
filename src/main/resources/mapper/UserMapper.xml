@@ -7,4 +7,12 @@
     <select id="selectOneUser"  resultType="User">
         SELECT * FROM User WHERE username = #{username} and password=#{password}
     </select>
+
+
+    <select id="findAllSales" resultType="com.ssm.tpssystem.domain.User">
+        SELECT * FROM user
+        WHERE duty = "s"
+
+    </select>
+
 </mapper>

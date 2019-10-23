@@ -1,39 +1,15 @@
 package com.ssm.tpssystem.domain;
 
+import java.math.BigDecimal;
+
 public class Trade {
     private Integer id;
-    private Integer creatorId;
-    private Integer relativeId;
-    private Integer matchId;
-    private Integer productId;
-    private Double price;
-    private Integer originId;
-
-    public Trade(){
-
-    }
-
-    public Trade(Integer id, Integer creatorId, Integer relativeId, Integer matchId, Integer productId, Double price, Integer originId) {
-        this.id = id;
-        this.creatorId = creatorId;
-        this.relativeId = relativeId;
-        this.matchId = matchId;
-        this.productId = productId;
-        this.price = price;
-        this.originId = originId;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Integer getOriginId() {
-        return originId;
-    }
-
-    public void setOriginId(Integer originId) {
-        this.originId = originId;
-    }
+    private Integer creator_id;
+    private Integer relative_id;
+    private Integer match_id;
+    private Integer product_id;
+    private BigDecimal price;
+    private Integer origin_id;
 
     public Integer getId() {
         return id;
@@ -43,43 +19,51 @@ public class Trade {
         this.id = id;
     }
 
-    public Integer getCreatorId() {
-        return creatorId;
+    public Integer getCreator_id() {
+        return creator_id;
     }
 
-    public void setCreatorId(Integer creatorId) {
-        this.creatorId = creatorId;
+    public void setCreator_id(Integer creator_id) {
+        this.creator_id = creator_id;
     }
 
-    public Integer getRelativeId() {
-        return relativeId;
+    public Integer getRelative_id() {
+        return relative_id;
     }
 
-    public void setRelativeId(Integer relativeId) {
-        this.relativeId = relativeId;
+    public void setRelative_id(Integer relative_id) {
+        this.relative_id = relative_id;
     }
 
-    public Integer getMatchId() {
-        return matchId;
+    public Integer getMatch_id() {
+        return match_id;
     }
 
-    public void setMatchId(Integer matchId) {
-        this.matchId = matchId;
+    public void setMatch_id(Integer match_id) {
+        this.match_id = match_id;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Integer getProduct_id() {
+        return product_id;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct_id(Integer product_id) {
+        this.product_id = product_id;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getOrigin_id() {
+        return origin_id;
+    }
+
+    public void setOrigin_id(Integer origin_id) {
+        this.origin_id = origin_id;
     }
 }
