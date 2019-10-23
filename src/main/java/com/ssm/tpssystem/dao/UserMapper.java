@@ -18,4 +18,7 @@ public interface UserMapper {
 
     @Select("SELECT USERNAME FROM USER WHERE ID = #{id}")
     String queryNameById(@Param("id") Integer id);
+
+    @Select("SELECT DUTY FROM USER WHERE ID = #{id}")
+    String queryDutyById(@Param("id") Integer id);
 }

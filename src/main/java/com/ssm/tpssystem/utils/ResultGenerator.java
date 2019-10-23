@@ -55,4 +55,5 @@ public class ResultGenerator {
                 .setMessage(message)
                 .setData(data);
     }
+
 }

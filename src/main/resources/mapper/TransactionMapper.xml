@@ -3,7 +3,7 @@
 <mapper namespace="com.ssm.tpssystem.dao.TransactionMapper" >
 
     <select id="selectLatestId"  resultType="Integer">
-        select interaction_id from transaction where trade_id=#{tradeId}
+        select i.interaction_id from transaction t left join interaction i on t.interaction_id=i.id  where t.trade_id=#{tradeId}
     </select>
 
     <update id="modify" parameterType="Interaction">

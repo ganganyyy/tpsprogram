@@ -6,6 +6,7 @@ import com.ssm.tpssystem.domain.Trade;
 import com.ssm.tpssystem.service.MatchService;
 import com.ssm.tpssystem.utils.BackOfiice;
 import com.ssm.tpssystem.utils.RejectResult;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,17 +34,66 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public Integer autoMatch(Integer tradeId){
         Trade trade = tradeMapper.queryById(tradeId);
-        Integer result = 0;
-        List<Trade> SalesTradeList = tradeMapper.selectByCreator_idAndPrice(trade.getRelative_id(),trade.getProduct_id(),trade.getPrice());
-        if(SalesTradeList == null||SalesTradeList.size() == 0){
-            List<Trade> TraderTradeList = tradeMapper.selectByRelative_idAndPrice(trade.getCreator_id(),trade.getProduct_id(),trade.getPrice());
-            //if tradeList is empty,autoMatch unsuccessfully
-            if(TraderTradeList == null|| TraderTradeList.size() == 0)
-                return 0;
+        if(trade==null){
+            return -2;
+        }
+        if(trade.getMatch_id()!=null){
+            List<Trade> SalesTradeList = tradeMapper.selectByCreator_idAndPrice(trade.getRelative_id(),trade.getProduct_id(),trade.getPrice());
+            if(SalesTradeList == null||SalesTradeList.size() == 0){
+                List<Trade> TraderTradeList = tradeMapper.selectByRelative_idAndPrice(trade.getCreator_id(),trade.getProduct_id(),trade.getPrice());
+                //if tradeList is empty,autoMatch unsuccessfully
+                if(TraderTradeList == null|| TraderTradeList.size() == 0)
+                    return 0;
+
+                else {
+
+                    for(Trade tradeItem:TraderTradeList){
+                        Integer matchedInteractionId = transactionMapper.queryInteraction(tradeItem.getId());
+                        Interaction matchedInteraction = interactionMapper.queryById(matchedInteractionId);
+                        Integer version = matchedInteraction.getVersion();
+                        if(version != 2){
+                            //version !=2 means the trade is not pending (can not match)
+                            continue;
+                        }
+
+                        //version==2 ,autoMatch success
+                        //the current tradeItem is the matched trade
+                        else {
+
+                            //create new interaction for the matched trade
+                            // version from 2 to 3 means matched successfully
+                            matchedInteraction.setVersion(3);
+                            interactionMapper.insertInteraction(matchedInteraction);
+
+                            //create new interaction for the current trade
+                            Integer interactionId = transactionMapper.queryInteraction(trade.getId());
+                            Interaction interaction = interactionMapper.queryById(interactionId);
+                            interaction.setVersion(3);
+                            interactionMapper.insertInteraction(interaction);
+
+                            //update current transacton for the two trades
+                            Integer maxId = interactionMapper.queryMaxId(trade.getId());
+                            transactionMapper.updateInteraction_id(trade.getId(),maxId);
+                            maxId = interactionMapper.queryMaxId(tradeItem.getId());
+                            transactionMapper.updateInteraction_id(tradeItem.getId(),maxId);
+
+                            //update match_id for the two matched trade
+                            tradeMapper.updateAfterMatched(tradeItem.getId(),trade.getId());
+                            tradeMapper.updateAfterMatched(trade.getId(),tradeItem.getId());
+
+                            setTerminalStatus(trade);
+                            setTerminalStatus(tradeItem);
+
+                            //return 1 represents autoMatch successfully
+                            return 1;
+                        }
+                    }
+                }
+            }
 
             else {
 
-                for(Trade tradeItem:TraderTradeList){
+                for(Trade tradeItem:SalesTradeList){
                     Integer matchedInteractionId = transactionMapper.queryInteraction(tradeItem.getId());
                     Interaction matchedInteraction = interactionMapper.queryById(matchedInteractionId);
                     Integer version = matchedInteraction.getVersion();
@@ -51,7 +101,6 @@ public class MatchServiceImpl implements MatchService {
                         //version !=2 means the trade is not pending (can not match)
                         continue;
                     }
-
                     //version==2 ,autoMatch success
                     //the current tradeItem is the matched trade
                     else {
@@ -67,7 +116,7 @@ public class MatchServiceImpl implements MatchService {
                         interaction.setVersion(3);
                         interactionMapper.insertInteraction(interaction);
 
-                        //update current transacton for the two trades
+                        //update current transaction for the two trades
                         Integer maxId = interactionMapper.queryMaxId(trade.getId());
                         transactionMapper.updateInteraction_id(trade.getId(),maxId);
                         maxId = interactionMapper.queryMaxId(tradeItem.getId());
@@ -77,6 +126,7 @@ public class MatchServiceImpl implements MatchService {
                         tradeMapper.updateAfterMatched(tradeItem.getId(),trade.getId());
                         tradeMapper.updateAfterMatched(trade.getId(),tradeItem.getId());
 
+
                         setTerminalStatus(trade);
                         setTerminalStatus(tradeItem);
 
@@ -85,61 +135,43 @@ public class MatchServiceImpl implements MatchService {
                     }
                 }
             }
+            //when 'return 0' there is executed,autoMatching is unsuccessful
+            return 0;
         }
-
         else {
-
-            for(Trade tradeItem:SalesTradeList){
-                Integer matchedInteractionId = transactionMapper.queryInteraction(tradeItem.getId());
-                Interaction matchedInteraction = interactionMapper.queryById(matchedInteractionId);
-                Integer version = matchedInteraction.getVersion();
-                if(version != 2){
-                    //version !=2 means the trade is not pending (can not match)
-                    continue;
-                }
-                //version==2 ,autoMatch success
-                //the current tradeItem is the matched trade
-                else {
-
-                    //create new interaction for the matched trade
-                    // version from 2 to 3 means matched successfully
-                    matchedInteraction.setVersion(3);
-                    interactionMapper.insertInteraction(matchedInteraction);
-
-                    //create new interaction for the current trade
-                    Integer interactionId = transactionMapper.queryInteraction(trade.getId());
-                    Interaction interaction = interactionMapper.queryById(interactionId);
-                    interaction.setVersion(3);
-                    interactionMapper.insertInteraction(interaction);
-
-                    //update current transaction for the two trades
-                    Integer maxId = interactionMapper.queryMaxId(trade.getId());
-                    transactionMapper.updateInteraction_id(trade.getId(),maxId);
-                    maxId = interactionMapper.queryMaxId(tradeItem.getId());
-                    transactionMapper.updateInteraction_id(tradeItem.getId(),maxId);
-
-                    //update match_id for the two matched trade
-                    tradeMapper.updateAfterMatched(tradeItem.getId(),trade.getId());
-                    tradeMapper.updateAfterMatched(trade.getId(),tradeItem.getId());
-
-
-                    setTerminalStatus(trade);
-                    setTerminalStatus(tradeItem);
-
-                    //return 1 represents autoMatch successfully
-                    return 1;
-                }
-            }
+            return -1;
         }
-        //when 'return 0' there is executed,autoMatching is unsuccessful
-        return 0;
     }
 
     //correct price of salesTrade equal to traderTrade
     @Override
     public Integer manualMatch(Integer tradeId,Integer matchTradeId) {
-        Trade traderTrade = tradeMapper.queryById(tradeId);
-        Trade originSalesTrade = tradeMapper.queryById(matchTradeId);
+
+        Trade tempTrade = tradeMapper.queryById(tradeId);
+
+        if(tempTrade==null)
+            return -2;
+
+        String tempDuty = userMapper.queryDutyById(tempTrade.getCreator_id());
+        Trade traderTrade = new Trade();
+        Trade originSalesTrade = new Trade();
+        if(tempDuty.equals("T")||tempDuty.equals("t")){
+            traderTrade = tradeMapper.queryById(tradeId);
+            originSalesTrade = tradeMapper.queryById(matchTradeId);
+            if(traderTrade==null||originSalesTrade==null)
+                return -2;
+            if(traderTrade.getMatch_id()!=null||originSalesTrade.getMatch_id()!=null)
+                return -1;
+        }
+        else {
+            traderTrade = tradeMapper.queryById(matchTradeId);
+            originSalesTrade = tradeMapper.queryById(tradeId);
+            if(traderTrade==null||originSalesTrade==null)
+                return -2;
+            if(traderTrade.getMatch_id()!=null||originSalesTrade.getMatch_id()!=null)
+                return -1;
+        }
+
         Integer originSalesInteractionId = transactionMapper.queryInteraction(traderTrade.getId());
         Interaction originSalesInteraction = interactionMapper.queryById(originSalesInteractionId);
 
@@ -211,6 +243,12 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public List<Map<String, Object>> listMatchingTrades(Integer tradeId) {
         Trade trade = tradeMapper.queryById(tradeId);
+
+        if(trade==null)
+            return null;
+        if(trade.getMatch_id()!=null)
+            return null;
+
         List<Map<String,Object>> resultTradeList = new ArrayList<>();
         List<Trade> SalesTradeList = tradeMapper.selectByCreator_id(trade.getRelative_id(),trade.getProduct_id());
         if(SalesTradeList == null||SalesTradeList.size() == 0) {

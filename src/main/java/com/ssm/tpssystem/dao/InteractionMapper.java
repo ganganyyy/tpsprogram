@@ -16,12 +16,13 @@ import com.ssm.tpssystem.domain.Trade;
 
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
 public interface InteractionMapper {
     public void addInteraction(Interaction interaction);
-    public List<Interaction> findInteractionByTrade(Trade trade);
+    public List<Map<Object,Object>> findInteractionByTrade(Trade trade);
     int insertOneInteraction(Interaction interaction);
 
 

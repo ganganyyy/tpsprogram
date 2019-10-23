@@ -5,6 +5,7 @@ import com.ssm.tpssystem.domain.RestResult;
 import com.ssm.tpssystem.domain.Trade;
 import com.ssm.tpssystem.service.HistoryService;
 import com.ssm.tpssystem.utils.ResultGenerator;
+import com.ssm.tpssystem.utils.Transform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @Controller
@@ -30,14 +32,18 @@ public class HistoryController {
                                             @RequestBody Trade trade){
 
         Trade tempTrade = historyService.findTradeById(trade.getId());
-        System.out.println("111");
-        System.out.println(tempTrade.getOrigin_id());
-        List<Interaction> list = historyService.findInteractionByTrade(tempTrade);
+
+
+        List<Map<Object,Object>> list = historyService.findInteractionByTrade(tempTrade);
         while (tempTrade.getOrigin_id() != null){
             tempTrade = historyService.findTradeById(tempTrade.getOrigin_id());
-            for(Interaction interaction:historyService.findInteractionByTrade(tempTrade)){
-                list.add(interaction);
+            for(Map<Object,Object> map:historyService.findInteractionByTrade(tempTrade)){
+                list.add(map);
             }
+        }
+        for(Map<Object,Object> map:list){
+            String status = Transform.versionToStatus((Integer)map.get("version"),(Integer)map.get("reject_code"));
+            map.put("status",status);
         }
         return resultGenerator.getSuccessResult(list);
     }
