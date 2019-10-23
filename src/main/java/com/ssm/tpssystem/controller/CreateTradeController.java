@@ -34,8 +34,8 @@ public class CreateTradeController {
     public void CreateTrade(HttpServletResponse httpServletResponse,
                             @RequestBody Trade trade, HttpSession session){
 
-        Integer creator_id = (Integer)session.getAttribute("Id");
-        trade.setCreator_id(creator_id);
+//        Integer creator_id = (Integer)session.getAttribute("Id");
+//        trade.setCreator_id(creator_id);
         Integer trade_id = createTradeService.createTrade(trade);
         Timestamp timestamp = new Timestamp(new Date().getTime());
         Interaction interaction = new Interaction();
