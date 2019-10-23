@@ -60,23 +60,48 @@ public class TradeServiceImpl implements TradeService {
         int modiMatch=tradeMapper.updateMatchId(curId,curSalId);
 
         //2.find latest interacitonId  +1
-        int interactionId=transactionMapper.selectLatestId(tradeId)+1;
+        int interactionIdForTrade=transactionMapper.selectLatestId(tradeId)+1;
+        int interactionIdForSale=transactionMapper.selectLatestId(preSale.getId())+1;
         //3.new interaction
-        Interaction interaction=new Interaction();
-        Timestamp timestamp = new Timestamp(new Date().getTime());
-        interaction.setCreate_time(timestamp);
-        //TODO:interactionId为1还是原来的
-        interaction.setInteraction_id(interactionId);
-        interaction.setTrade_id(curId);
-        interaction.setVersion(1);
-        int newIn=interactionMapper.insertOneInteraction(interaction);
+        Integer interTra=0;
+        for(int i=1;i<5;i++){
+            Interaction interactionTra=new Interaction();
+            Timestamp timestamp = new Timestamp(new Date().getTime());
+            interactionTra.setCreate_time(timestamp);
+            //TODO:interactionId为1还是原来
+            interactionTra.setInteraction_id(interactionIdForTrade);
+            interactionTra.setTrade_id(curId);
+            interactionTra.setVersion(i);
+            int newIn=interactionMapper.insertOneInteraction(interactionTra);
+            interTra=interactionTra.getId();
+        }
+        Integer interSal=0;
+        for(int i=1;i<5;i++){
+            Interaction interactionSal=new Interaction();
+            Timestamp timestamp = new Timestamp(new Date().getTime());
+            interactionSal.setCreate_time(timestamp);
+            //TODO:interactionId为1还是原来
+            interactionSal.setInteraction_id(interactionIdForSale);
+            interactionSal.setTrade_id(curSalId);
+            interactionSal.setVersion(i);
+            int newIn=interactionMapper.insertOneInteraction(interactionSal);
+            interSal=interactionSal.getId();
+        }
+
+
         //4.modify transaction
-        Transaction transaction=new Transaction();
-        transaction.setTrade_id(curId);
-        transaction.setInteraction_id(interaction.getId()-1);
+        Transaction transactionForTrade=new Transaction();
+        transactionForTrade.setTrade_id(curId);
+        transactionForTrade.setInteraction_id(interTra-1);
         //int modi=transactionMapper.modify(transaction);
-        int newTrans=transactionMapper.insertOneTransaction(transaction);
-        if(newTra>0&&newSal>0&&newIn>0&&newTrans>0&&modiMatch>0){
+        int newTrans=transactionMapper.insertOneTransaction(transactionForTrade);
+        Transaction transactionForSale=new Transaction();
+        transactionForSale.setTrade_id(curSalId);
+        transactionForSale.setInteraction_id(interSal-1);
+        //int modi=transactionMapper.modify(transaction);
+        int newTrans2=transactionMapper.insertOneTransaction(transactionForSale);
+
+        if(newTra>0&&newSal>0&&newTrans>0&&newTrans2>0&&modiMatch>0){
             return true;
         }
         return false;
