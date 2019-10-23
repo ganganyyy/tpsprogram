@@ -4,7 +4,7 @@ import com.ssm.tpssystem.domain.RestResult;
 import com.ssm.tpssystem.domain.ResultCode;
 import com.ssm.tpssystem.domain.TradeId;
 import com.ssm.tpssystem.domain.TradesId;
-import com.ssm.tpssystem.service.impl.MatchServiceImpl;
+import com.ssm.tpssystem.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class MatchController {
 
     @Autowired(required = false)
-    MatchServiceImpl matchService;
+    MatchService matchService;
 
     @PostMapping("autoMatch")
     public RestResult autoMatch(@RequestBody TradeId tradeId){
