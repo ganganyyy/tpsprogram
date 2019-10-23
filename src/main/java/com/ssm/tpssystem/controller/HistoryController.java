@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @Controller
@@ -30,13 +31,13 @@ public class HistoryController {
                                             @RequestBody Trade trade){
 
         Trade tempTrade = historyService.findTradeById(trade.getId());
-        System.out.println("111");
-        System.out.println(tempTrade.getOrigin_id());
-        List<Interaction> list = historyService.findInteractionByTrade(tempTrade);
+
+
+        List<Map<Object,Object>> list = historyService.findInteractionByTrade(tempTrade);
         while (tempTrade.getOrigin_id() != null){
             tempTrade = historyService.findTradeById(tempTrade.getOrigin_id());
-            for(Interaction interaction:historyService.findInteractionByTrade(tempTrade)){
-                list.add(interaction);
+            for(Map<Object,Object> map:historyService.findInteractionByTrade(tempTrade)){
+                list.add(map);
             }
         }
         return resultGenerator.getSuccessResult(list);

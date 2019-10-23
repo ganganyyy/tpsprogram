@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -31,8 +32,10 @@ public class CreateTradeController {
     @RequestMapping(value = "/createTrade", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public void CreateTrade(HttpServletResponse httpServletResponse,
-                                  @RequestBody Trade trade){
+                            @RequestBody Trade trade, HttpSession session){
 
+        Integer creator_id = (Integer)session.getAttribute("Id");
+        trade.setCreator_id(creator_id);
         Integer trade_id = createTradeService.createTrade(trade);
         Timestamp timestamp = new Timestamp(new Date().getTime());
         Interaction interaction = new Interaction();

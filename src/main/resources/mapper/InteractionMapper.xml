@@ -12,7 +12,8 @@
         VALUES (#{interaction_id}, #{version}, #{reject_code}, #{reject_reason}, #{trade_id}, now())
     </insert>
     <select id="findInteractionByTrade" parameterType="com.ssm.tpssystem.domain.Trade" resultType="com.ssm.tpssystem.domain.Interaction">
-        SELECT * FROM interaction
-        WHERE trade_id = #{id}
+        SELECT * FROM interaction I LEFT JOIN trade T ON I.trade_id = T.id
+        LEFT JOIN user U ON T.creator_id = U.id
+        WHERE T.id = #{id}
     </select>
 </mapper>

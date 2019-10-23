@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class HistoryServiceImpl implements HistoryService {
@@ -22,9 +23,9 @@ public class HistoryServiceImpl implements HistoryService {
         return tradeMapper.findTradeById(id);
     }
     @Override
-    public List<Interaction> findInteractionByTrade(Trade trade) {
+    public List<Map<Object,Object>> findInteractionByTrade(Trade trade) {
 
-        List<Interaction> list = interactionMapper.findInteractionByTrade(trade);
+        List<Map<Object,Object>> list = interactionMapper.findInteractionByTrade(trade);
 
 
         return list;
