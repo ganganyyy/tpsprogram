@@ -29,6 +29,14 @@ public class MatchController {
             restResult.setCode(ResultCode.SUCCESS.getCode());
             restResult.setMessage("Transaction is autoMatched successfully.");
         }
+        else if(result==-1){
+            restResult.setCode(ResultCode.FAIL.getCode());
+            restResult.setMessage("The trade has been matched before.");
+        }
+        else if(result==-2){
+            restResult.setCode(ResultCode.FAIL.getCode());
+            restResult.setMessage("The trade is not existed.");
+        }
         else {
             restResult.setCode(ResultCode.FAIL.getCode());
             restResult.setMessage("Transaction is autoMatched failed.");
@@ -60,6 +68,14 @@ public class MatchController {
         if(result ==1){
             restResult.setCode(ResultCode.SUCCESS.getCode());
             restResult.setMessage("Transaction is matched successfully.");
+        }
+        else if(result==-1){
+            restResult.setCode(ResultCode.FAIL.getCode());
+            restResult.setMessage("The trade has been matched before.");
+        }
+        else if(result==-2){
+            restResult.setCode(ResultCode.FAIL.getCode());
+            restResult.setMessage("The trade is not existed.");
         }
         else {
             restResult.setCode(ResultCode.FAIL.getCode());
