@@ -31,7 +31,7 @@ public class CreateTradeController {
 
     @RequestMapping(value = "/createTrade", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public void CreateTrade(HttpServletResponse httpServletResponse,
+    public Integer CreateTrade(HttpServletResponse httpServletResponse,
                             @RequestBody Trade trade, HttpSession session){
 
 //        Integer creator_id = (Integer)session.getAttribute("Id");
@@ -56,6 +56,7 @@ public class CreateTradeController {
         transaction.setTrade_id(trade_id);
         transaction.setInteraction_id(interaction_id);
         createTradeService.createTransaction(transaction);
+        return trade_id;
     }
 
     @Autowired
