@@ -48,11 +48,11 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>-->
         <!-- JWT -->
-        <dependency>
+       <!-- <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

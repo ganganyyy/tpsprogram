@@ -61,7 +61,7 @@ public class TradeServiceImpl implements TradeService {
 
         //2.find latest interacitonId  +1
         int interactionId=transactionMapper.selectLatestId(tradeId)+1;
-        //3.new interaction
+        //        //3.new interaction
         Interaction interaction=new Interaction();
         Timestamp timestamp = new Timestamp(new Date().getTime());
         interaction.setCreate_time(timestamp);

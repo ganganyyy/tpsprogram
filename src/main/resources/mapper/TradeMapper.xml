@@ -32,12 +32,12 @@
         update trade set price=#{price} where id=#{id}
     </update>
     <select id="selectOneById"  resultType="Trade" >
-        select * from trade t.id=#{id}
+        select * from trade where id=#{id}
     </select>
 
     <insert id="insertOneTrade" parameterType="Trade" useGeneratedKeys="true" keyProperty="id">
     insert into trade
-    values(#{id},#{creatorId},#{relativeId},#{matchId},#{productId},#{price},#{originId})
+    values(#{id},#{creator_id},#{relative_id},#{match_id},#{product_id},#{price},#{origin_id})
     </insert>
     <update id="updateMatchId">
         update trade set match_id=#{matchId} where id=#{id}

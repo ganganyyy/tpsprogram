@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@CrossOrigin
 @Controller
 public class LoginController {
     @Autowired
