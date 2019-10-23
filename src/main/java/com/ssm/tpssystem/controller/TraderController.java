@@ -1,6 +1,7 @@
 package com.ssm.tpssystem.controller;
 
 import com.ssm.tpssystem.domain.RestResult;
+import com.ssm.tpssystem.domain.Trade;
 import com.ssm.tpssystem.domain.User;
 import com.ssm.tpssystem.service.TradeService;
 import com.ssm.tpssystem.service.UserService;
