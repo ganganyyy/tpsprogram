@@ -1,3 +1,4 @@
+/*
 package com.ssm.tpssystem.config;
 
 import com.ssm.tpssystem.utils.ResponseUtil;
@@ -34,3 +35,4 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
 
     }
 }
+*/

@@ -4,4 +4,7 @@
     <select id="selectByUsername"  resultType="User">
         SELECT * FROM User WHERE username = #{username}
     </select>
+    <select id="selectOneUser"  resultType="User">
+        SELECT * FROM User WHERE username = #{username} and password=#{password}
+    </select>
 </mapper>

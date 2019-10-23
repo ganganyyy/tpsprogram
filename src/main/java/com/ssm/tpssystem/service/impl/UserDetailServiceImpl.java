@@ -1,4 +1,5 @@
 package com.ssm.tpssystem.service.impl;
+/*
 
 import com.ssm.tpssystem.domain.SecurityUserDetils;
 import com.ssm.tpssystem.domain.User;
@@ -21,3 +22,4 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new SecurityUserDetils(user);
     }
 }
+*/

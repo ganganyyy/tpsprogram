@@ -1,3 +1,4 @@
+/*
 package com.ssm.tpssystem.config;
 
 import com.ssm.tpssystem.service.impl.UserDetailServiceImpl;
@@ -39,16 +40,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
         //any request
-               //Request()
+               .anyRequest()
         //Identity authentication required
-                //.authenticated()
+                .authenticated()
                 .and()
         //close Cross-Site Request Forgery
                 .csrf().disable()
         //front and rear end separation:JWT no need for session
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-               .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(),7));
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+               //.and()
+                //.addFilter(new JWTAuthenticationFilter(authenticationManager(),7));
 
     }
     @Override
@@ -59,3 +60,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 }
+*/

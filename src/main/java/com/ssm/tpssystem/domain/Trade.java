@@ -7,6 +7,33 @@ public class Trade {
     private Integer matchId;
     private Integer productId;
     private Double price;
+    private Integer originId;
+
+    public Trade(){
+
+    }
+
+    public Trade(Integer id, Integer creatorId, Integer relativeId, Integer matchId, Integer productId, Double price, Integer originId) {
+        this.id = id;
+        this.creatorId = creatorId;
+        this.relativeId = relativeId;
+        this.matchId = matchId;
+        this.productId = productId;
+        this.price = price;
+        this.originId = originId;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getOriginId() {
+        return originId;
+    }
+
+    public void setOriginId(Integer originId) {
+        this.originId = originId;
+    }
 
     public Integer getId() {
         return id;

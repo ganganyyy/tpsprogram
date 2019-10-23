@@ -4,6 +4,7 @@ import com.ssm.tpssystem.dao.InteractionMapper;
 import com.ssm.tpssystem.dao.TradeMapper;
 import com.ssm.tpssystem.dao.TransactionMapper;
 import com.ssm.tpssystem.domain.Interaction;
+import com.ssm.tpssystem.domain.Trade;
 import com.ssm.tpssystem.domain.Transaction;
 import com.ssm.tpssystem.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,23 +42,38 @@ public class TradeServiceImpl implements TradeService {
     @Override
     public Boolean updateTrade(Integer tradeId, Double price) {
         //1.update price
-        int result= tradeMapper.updateForPrice(tradeId,price);
+        //int result= tradeMapper.updateForPrice(tradeId,price);
+        Trade preTrade=tradeMapper.selectOneById(tradeId);
+        Trade curTrade=new Trade(null,preTrade.getCreatorId(),preTrade.getRelativeId(),null,
+                preTrade.getProductId(),price,preTrade.getId());
+        int newTra=tradeMapper.insertOneTrade(curTrade);
+        Integer curId=curTrade.getId()-1;
+
+        Trade preSale=tradeMapper.selectOneById(preTrade.getMatchId());
+        Trade curSale=new Trade(null,preSale.getCreatorId(),preSale.getRelativeId(),curId,
+                preSale.getProductId(),price,preSale.getId());
+        int newSal=tradeMapper.insertOneTrade(curSale);
+        Integer curSalId=curSale.getId()-1;
+
+        int modiMatch=tradeMapper.updateMatchId(curId,curSalId);
+
         //2.find latest interacitonId  +1
         int interactionId=transactionMapper.selectLatestId(tradeId)+1;
         //3.new interaction
         Interaction interaction=new Interaction();
         interaction.setCreate_time(new Date());
+        //TODO:interactionId为1还是原来的
         interaction.setInteraction_id(interactionId);
-        interaction.setTrade_id(tradeId);
+        interaction.setTrade_id(curId);
         interaction.setVersion(1);
         int newIn=interactionMapper.insertOneInteraction(interaction);
         //4.modify transaction
         Transaction transaction=new Transaction();
-        transaction.setTrade_id(tradeId);
-        //TODO:increment interaction_id
-        transaction.setInteraction_id(interaction.getId());
-        int modi=transactionMapper.modify(transaction);
-        if(result>0&&modi>0&&newIn>0){
+        transaction.setTrade_id(curId);
+        transaction.setInteraction_id(interaction.getId()-1);
+        //int modi=transactionMapper.modify(transaction);
+        int newTrans=transactionMapper.insertOneTransaction(transaction);
+        if(newTra>0&&newSal>0&&newIn>0&&newTrans>0&&modiMatch>0){
             return true;
         }
         return false;

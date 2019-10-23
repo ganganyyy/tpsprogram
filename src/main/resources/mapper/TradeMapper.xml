@@ -25,10 +25,21 @@
         t.product_id as productId,t.price,i.version,t.relative_id as relativeId,u2.username as relativename,u2.duty as relativeDuty
         from trade t left join transaction r on t.id=r.trade_id left join interaction i on r.interaction_id =i.id
         left join User u on t.creator_id=u.id left join User u2 on t.relative_id=u2.id
-        where (t.creator_id=1 or u.duty='s') and t.id NOT IN (
+        where (t.creator_id=#{creatorId} or u.duty='s') and t.id NOT IN (
         select origin_id from trade where origin_id is not null);
     </select>
     <update id="updateForPrice">
         update trade set price=#{price} where id=#{id}
+    </update>
+    <select id="selectOneById"  resultType="Trade" >
+        select * from trade t.id=#{id}
+    </select>
+
+    <insert id="insertOneTrade" parameterType="Trade" useGeneratedKeys="true" keyProperty="id">
+    insert into trade
+    values(#{id},#{creatorId},#{relativeId},#{matchId},#{productId},#{price},#{originId})
+    </insert>
+    <update id="updateMatchId">
+        update trade set match_id=#{matchId} where id=#{id}
     </update>
 </mapper>

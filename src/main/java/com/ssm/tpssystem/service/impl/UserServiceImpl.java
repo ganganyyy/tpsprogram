@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService {
         user.setDuty("t");
         return user;*/
     }
+
+    @Override
+    public User findUser(String username, String password) {
+        return userMapper.selectOneUser(username,password);
+    }
 }
