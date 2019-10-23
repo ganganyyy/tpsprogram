@@ -5,6 +5,7 @@ import com.ssm.tpssystem.domain.RestResult;
 import com.ssm.tpssystem.domain.Trade;
 import com.ssm.tpssystem.service.HistoryService;
 import com.ssm.tpssystem.utils.ResultGenerator;
+import com.ssm.tpssystem.utils.Transform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,10 @@ public class HistoryController {
             for(Map<Object,Object> map:historyService.findInteractionByTrade(tempTrade)){
                 list.add(map);
             }
+        }
+        for(Map<Object,Object> map:list){
+            String status = Transform.versionToStatus((Integer)map.get("version"),(Integer)map.get("reject_code"));
+            map.put("status",status);
         }
         return resultGenerator.getSuccessResult(list);
     }

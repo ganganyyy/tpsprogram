@@ -6,6 +6,7 @@ import com.ssm.tpssystem.domain.User;
 import com.ssm.tpssystem.service.TradeService;
 import com.ssm.tpssystem.service.UserService;
 import com.ssm.tpssystem.utils.ResultGenerator;
+import com.ssm.tpssystem.utils.Transform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,12 @@ public class TraderController {
         System.out.println("id: "+creatorId);
         //TODO:CREATOR_ID
         Map<String,Object>data=new HashMap<>();
-        data.put("tradeList",tradeService.getAllTrades(1));
+        List<Map<String,String>> tradeList=tradeService.getAllTrades(1);
+        for(Map trade:tradeList){
+            String status= Transform.versionToStatus((Integer)trade.get("version"),(Integer)trade.get("reject_code"));
+            trade.put("status",status);
+        }
+        data.put("tradeList",tradeList);
         return resultGenerator.getSuccessResult(data);
     }
 
