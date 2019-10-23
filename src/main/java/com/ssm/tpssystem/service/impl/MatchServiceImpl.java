@@ -37,7 +37,7 @@ public class MatchServiceImpl implements MatchService {
         if(trade==null){
             return -2;
         }
-        if(trade.getMatch_id()!=null){
+        if(trade.getMatch_id()==null){
             List<Trade> SalesTradeList = tradeMapper.selectByCreator_idAndPrice(trade.getRelative_id(),trade.getProduct_id(),trade.getPrice());
             if(SalesTradeList == null||SalesTradeList.size() == 0){
                 List<Trade> TraderTradeList = tradeMapper.selectByRelative_idAndPrice(trade.getCreator_id(),trade.getProduct_id(),trade.getPrice());
