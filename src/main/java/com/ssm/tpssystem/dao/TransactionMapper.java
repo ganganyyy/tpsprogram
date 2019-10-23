@@ -35,6 +35,6 @@ public interface TransactionMapper {
 
     //query the newest interaction of trade
     @Select("SELECT INTERACTION_ID FROM TRANSACTION WHERE TRADE_ID = #{trade_id}")
-    Integer queryInteraction(@Param("trade_id") Integer trade_id);
+    Integer queryInteractionId(@Param("trade_id") Integer trade_id);
 
 }

@@ -48,7 +48,7 @@ public class MatchServiceImpl implements MatchService {
                 else {
 
                     for(Trade tradeItem:TraderTradeList){
-                        Integer matchedInteractionId = transactionMapper.queryInteraction(tradeItem.getId());
+                        Integer matchedInteractionId = transactionMapper.queryInteractionId(tradeItem.getId());
                         Interaction matchedInteraction = interactionMapper.queryById(matchedInteractionId);
                         Integer version = matchedInteraction.getVersion();
                         if(version != 2){
@@ -66,7 +66,7 @@ public class MatchServiceImpl implements MatchService {
                             interactionMapper.insertInteraction(matchedInteraction);
 
                             //create new interaction for the current trade
-                            Integer interactionId = transactionMapper.queryInteraction(trade.getId());
+                            Integer interactionId = transactionMapper.queryInteractionId(trade.getId());
                             Interaction interaction = interactionMapper.queryById(interactionId);
                             interaction.setVersion(3);
                             interactionMapper.insertInteraction(interaction);
@@ -81,8 +81,10 @@ public class MatchServiceImpl implements MatchService {
                             tradeMapper.updateAfterMatched(tradeItem.getId(),trade.getId());
                             tradeMapper.updateAfterMatched(trade.getId(),tradeItem.getId());
 
-                            setTerminalStatus(trade);
-                            setTerminalStatus(tradeItem);
+                            RejectResult rejectResult = new RejectResult();
+                            rejectResult.setStatus("ACCEPTED");
+                            setTerminal(trade,rejectResult);
+                            setTerminal(tradeItem,rejectResult);
 
                             //return 1 represents autoMatch successfully
                             return 1;
@@ -94,7 +96,7 @@ public class MatchServiceImpl implements MatchService {
             else {
 
                 for(Trade tradeItem:SalesTradeList){
-                    Integer matchedInteractionId = transactionMapper.queryInteraction(tradeItem.getId());
+                    Integer matchedInteractionId = transactionMapper.queryInteractionId(tradeItem.getId());
                     Interaction matchedInteraction = interactionMapper.queryById(matchedInteractionId);
                     Integer version = matchedInteraction.getVersion();
                     if(version != 2){
@@ -111,7 +113,7 @@ public class MatchServiceImpl implements MatchService {
                         interactionMapper.insertInteraction(matchedInteraction);
 
                         //create new interaction for the current trade
-                        Integer interactionId = transactionMapper.queryInteraction(trade.getId());
+                        Integer interactionId = transactionMapper.queryInteractionId(trade.getId());
                         Interaction interaction = interactionMapper.queryById(interactionId);
                         interaction.setVersion(3);
                         interactionMapper.insertInteraction(interaction);
@@ -127,8 +129,10 @@ public class MatchServiceImpl implements MatchService {
                         tradeMapper.updateAfterMatched(trade.getId(),tradeItem.getId());
 
 
-                        setTerminalStatus(trade);
-                        setTerminalStatus(tradeItem);
+                        RejectResult rejectResult = new RejectResult();
+                        rejectResult.setStatus("ACCEPTED");
+                        setTerminal(trade,rejectResult);
+                        setTerminal(tradeItem,rejectResult);
 
                         //return 1 represents autoMatch successfully
                         return 1;
@@ -172,7 +176,10 @@ public class MatchServiceImpl implements MatchService {
                 return -1;
         }
 
-        Integer originSalesInteractionId = transactionMapper.queryInteraction(traderTrade.getId());
+        BackOfiice backOfiice = new BackOfiice();
+        RejectResult rejectResult = backOfiice.BOExcecute(traderTrade,originSalesTrade);
+
+        Integer originSalesInteractionId = transactionMapper.queryInteractionId(traderTrade.getId());
         Interaction originSalesInteraction = interactionMapper.queryById(originSalesInteractionId);
 
         //set new salesTrade whose price is corrected equal to traderTrade
@@ -197,14 +204,14 @@ public class MatchServiceImpl implements MatchService {
         }
         else {
             for(Trade tradeItem:SalesTradeList){
-                if(transactionMapper.queryInteraction(tradeItem.getId())!=null){
+                if(transactionMapper.queryInteractionId(tradeItem.getId())!=null){
                     continue;
                 }
                 else{
                     //set the match_id of traderTrade
                     tradeMapper.updateAfterMatched(tradeItem.getId(),traderTrade.getId());
                     //create new interaction for the current trade
-                    Integer interactionId = transactionMapper.queryInteraction(traderTrade.getId());
+                    Integer interactionId = transactionMapper.queryInteractionId(traderTrade.getId());
                     Interaction interaction = interactionMapper.queryById(interactionId);
                     interaction.setVersion(3);
                     interactionMapper.insertInteraction(interaction);
@@ -225,8 +232,9 @@ public class MatchServiceImpl implements MatchService {
                     maxId = interactionMapper.queryMaxId(tradeItem.getId());
                     transactionMapper.insert(tradeItem.getId(),maxId);
 
-                    setTerminalStatus(traderTrade);
-                    setTerminalStatus(tradeItem);
+                    setTerminal(traderTrade,rejectResult);
+                    setTerminal(tradeItem,rejectResult);
+
                     //return 1 represents manualMatch successfully
                     return 1;
                 }
@@ -258,7 +266,7 @@ public class MatchServiceImpl implements MatchService {
             else {
                 //filter trades whose version = 2(status = pending)
                 for (Trade tradeItem:TraderTradeList){
-                    Integer matchedInteractionId = transactionMapper.queryInteraction(tradeItem.getId());
+                    Integer matchedInteractionId = transactionMapper.queryInteractionId(tradeItem.getId());
                     Interaction matchedInteraction = interactionMapper.queryById(matchedInteractionId);
                     Integer version = matchedInteraction.getVersion();
                     if(version != 2){
@@ -294,7 +302,7 @@ public class MatchServiceImpl implements MatchService {
         else {
             //filter trades whose version = 2(status = pending)
             for (Trade tradeItem:SalesTradeList){
-                Integer matchedInteractionId = transactionMapper.queryInteraction(tradeItem.getId());
+                Integer matchedInteractionId = transactionMapper.queryInteractionId(tradeItem.getId());
                 Interaction matchedInteraction = interactionMapper.queryById(matchedInteractionId);
                 Integer version = matchedInteraction.getVersion();
                 if(version != 2){
@@ -328,59 +336,18 @@ public class MatchServiceImpl implements MatchService {
     }
 
 
-    private Integer setTerminalStatus(Trade trade){
-        BackOfiice backOfiice = new BackOfiice();
-        RejectResult rejectResult = new RejectResult();
-        Integer origin_id = trade.getOrigin_id();
+    public Integer setTerminal(Trade trade,RejectResult rejectResult){
+        Integer interactionId = transactionMapper.queryInteractionId(trade.getId());
+        Interaction interaction = interactionMapper.queryById(interactionId);
+        interaction.setReject_reason(rejectResult.getReject_reason());
+        interaction.setReject_code(rejectResult.getReject_code());
+        interaction.setVersion(4);
+        interactionMapper.addInteraction(interaction);
 
-        //the trade has never been corrected
-        if(origin_id==null||origin_id==0){
-           rejectResult= backOfiice.BOExcecute(trade,trade);
-        }
-        else {
-            Trade originTrade = tradeMapper.queryById(origin_id);
+        Integer maxId = interactionMapper.queryMaxId(trade.getId());
+        transactionMapper.updateInteraction_id(trade.getId(),maxId);
 
-            // originId !=null and originTrade==null,data error
-            if(originTrade==null){
-                return -1;
-            }
-            else {
-                rejectResult = backOfiice.BOExcecute(trade,originTrade);
-            }
-        }
-        if(rejectResult.getStatus().equals("REJECTED")){
-
-            //create new interaction for the current trade
-            Integer interactionId = transactionMapper.queryInteraction(trade.getId());
-            Interaction interaction = interactionMapper.queryById(interactionId);
-            interaction.setVersion(4);
-            interaction.setReject_code(rejectResult.getReject_code());
-            interaction.setReject_reason(rejectResult.getReject_reason());
-            interactionMapper.insertInteraction(interaction);
-
-            //update current transacton for the trade
-            Integer maxId = interactionMapper.queryMaxId(trade.getId());
-            transactionMapper.updateInteraction_id(trade.getId(),maxId);
-            //return 1 represents rejected
-            return 0;
-        }
-        else if(rejectResult.getStatus().equals("ACCEPTED")){
-
-            //create new interaction for the current trade
-            Integer interactionId = transactionMapper.queryInteraction(trade.getId());
-            Interaction interaction = interactionMapper.queryById(interactionId);
-            interaction.setVersion(4);
-            interactionMapper.insertInteraction(interaction);
-
-            //update current transacton for the trade
-            Integer maxId = interactionMapper.queryMaxId(trade.getId());
-            transactionMapper.updateInteraction_id(trade.getId(),maxId);
-            //return 1 represents accept
-            return 1;
-        }
-        else {
-            // -1 means server internal error
-            return -1;
-        }
+        return 1;
     }
+
 }
