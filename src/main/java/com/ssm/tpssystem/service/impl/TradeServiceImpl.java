@@ -49,13 +49,13 @@ public class TradeServiceImpl implements TradeService {
         Trade curTrade=new Trade(null,preTrade.getCreator_id(),preTrade.getRelative_id(),null,
                 preTrade.getProduct_id(),price,preTrade.getId());
         int newTra=tradeMapper.insertOneTrade(curTrade);
-        Integer curId=curTrade.getId()-1;
+        Integer curId=curTrade.getId();
 
         Trade preSale=tradeMapper.selectOneById(preTrade.getMatch_id());
         Trade curSale=new Trade(null,preSale.getCreator_id(),preSale.getRelative_id(),curId,
                 preSale.getProduct_id(),price,preSale.getId());
         int newSal=tradeMapper.insertOneTrade(curSale);
-        Integer curSalId=curSale.getId()-1;
+        Integer curSalId=curSale.getId();
 
         int modiMatch=tradeMapper.updateMatchId(curId,curSalId);
 
@@ -92,12 +92,12 @@ public class TradeServiceImpl implements TradeService {
         //4.modify transaction
         Transaction transactionForTrade=new Transaction();
         transactionForTrade.setTrade_id(curId);
-        transactionForTrade.setInteraction_id(interTra-1);
+        transactionForTrade.setInteraction_id(interTra);
         //int modi=transactionMapper.modify(transaction);
         int newTrans=transactionMapper.insertOneTransaction(transactionForTrade);
         Transaction transactionForSale=new Transaction();
         transactionForSale.setTrade_id(curSalId);
-        transactionForSale.setInteraction_id(interSal-1);
+        transactionForSale.setInteraction_id(interSal);
         //int modi=transactionMapper.modify(transaction);
         int newTrans2=transactionMapper.insertOneTransaction(transactionForSale);
 
