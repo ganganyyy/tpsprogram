@@ -14,5 +14,5 @@ public interface UserMapper {
 
     public List<User> findAllSales();
 
-    public List<User> findAllSales();
+
 }

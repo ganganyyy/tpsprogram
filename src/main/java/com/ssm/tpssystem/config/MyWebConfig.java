@@ -13,7 +13,7 @@ public class MyWebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/","/index.html","/login","/login.html",
-                        "/login","/static/**");
+                        "/login","/static/**","/exit");
     }
 
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,7 @@ public class TraderController {
             return resultGenerator.getFailResult("tradeId==null or price==null");
         }
         Integer tradeId=Integer.valueOf(transactionIdS);
-        Double price=Double.valueOf(priceS);
+        BigDecimal price=BigDecimal.valueOf(Double.valueOf(priceS));
         boolean flag=tradeService.updateTrade(tradeId,price);
         if(flag){
             return resultGenerator.getSuccessResult();

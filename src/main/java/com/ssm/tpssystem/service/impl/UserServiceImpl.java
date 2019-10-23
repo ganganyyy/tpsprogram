@@ -19,10 +19,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUser(String username, String password) {
-        return userMapper.selectOneUser(username,password);
+        return userMapper.selectOneUser(username, password);
+    }
     @Override
-    public List<User> findAllSales() {
+    public List<User> findAllSales(){
         List<User> list = userMapper.findAllSales();
-        return list;
+     return list;
     }
 }

@@ -2,6 +2,7 @@ package com.ssm.tpssystem.service;
 
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -10,5 +11,5 @@ public interface TradeService {
     List<Map<String, String>> getAllTrades(Integer creator_id);
     List<Map<String,String>> getAllTradesByCreatorId(Integer creatorId);
     List<Map<String,String>> getAllTradesForSales();
-    Boolean updateTrade(Integer transactionId,Double price);
+    Boolean updateTrade(Integer transactionId,BigDecimal price);
 }

@@ -52,8 +52,11 @@ public class LoginController {
     }
 
 
+    @RequestMapping(value = "/exit", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
     public RestResult exit(HttpSession session){
         session.removeAttribute("Id");
+        System.out.println("exit:"+session.getAttribute("Id"));
         return resultGenerator.getSuccessResult("exit");
     }
 }

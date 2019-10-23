@@ -11,6 +11,19 @@ public class Trade {
     private BigDecimal price;
     private Integer origin_id;
 
+    public Trade(){
+
+    }
+    public Trade(Integer id, Integer creator_id, Integer relative_id, Integer match_id, Integer product_id, BigDecimal price, Integer origin_id) {
+        this.id = id;
+        this.creator_id = creator_id;
+        this.relative_id = relative_id;
+        this.match_id = match_id;
+        this.product_id = product_id;
+        this.price = price;
+        this.origin_id = origin_id;
+    }
+
     public Integer getId() {
         return id;
     }

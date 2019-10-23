@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     User findByUserName(String username);
     User findUser(String username,String password);
-    public List<User> findAllSales();
+    List<User> findAllSales();
 }
 
 
