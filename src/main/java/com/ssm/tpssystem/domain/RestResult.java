@@ -1,14 +1,11 @@
 package com.ssm.tpssystem.domain;
 
-/**
- * 统一封装API返回信息
- */
+
 public class RestResult {
-    //状态码
+
     private int code;
-    //消息
+
     private String message;
-    //额外的内容
     private Object data;
 
     public RestResult(){
